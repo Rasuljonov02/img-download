@@ -3,13 +3,21 @@ import { ref, watch } from 'vue'
 import getImages from '@/api'
 import { CloudDownloadOutlined } from '@ant-design/icons-vue'
 
+interface Photo {
+  src: {
+    landscape: string;
+    large2x: string;
+  };
+  alt?: string;
+}
+
 const link = ref<string>('')
 const btnLoading = ref(false)
-const dataINS = ref<any>(null)
+const dataINS = ref<{ photos: Photo[] } | null>(null)
 
-watch(link, (newVal) => {
+watch(link, async (newVal) => {
   if (newVal) {
-    get()
+    await get()
   }
 })
 
@@ -17,11 +25,10 @@ const get = async () => {
   if (!link.value) return
   btnLoading.value = true
   try {
-    const data = await getImages(link.value ? link.value : 'people')
-    console.log(data)
+    const data = await getImages(link.value || 'people')
     dataINS.value = data
   } catch (e) {
-    console.log(e)
+    console.error('Error fetching images:', e)
   } finally {
     btnLoading.value = false
   }
@@ -31,14 +38,26 @@ const clearData = () => {
   dataINS.value = null
   link.value = ''
 }
-const getDownloadFileName = (url:any)=>{
-  let startIndex = url.lastIndexOf('/') + 1
-  let endIndex = url.lastIndexOf('?')
-  let filename = url.substring(startIndex, endIndex)
+
+const getDownloadFileName = (url: string): string => {
+  const startIndex = url.lastIndexOf('/') + 1
+  const endIndex = url.lastIndexOf('?')
+  const filename = endIndex === -1 ? url.substring(startIndex) : url.substring(startIndex, endIndex)
   return filename
 }
 
+const downloadImage = (imageUrl: string) => {
+  const filename = getDownloadFileName(imageUrl)
+  const link = document.createElement('a')
+  link.href = imageUrl
+  link.setAttribute('download', filename)
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+
 </script>
+
 
 <template>
   <div class="small-contaimner">
