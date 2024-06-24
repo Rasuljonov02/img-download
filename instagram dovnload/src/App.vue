@@ -41,7 +41,7 @@ const getDownloadFileName = (url: string): string => {
     <div class="container">
       <div class="form-wrapper">
         <form @submit.prevent="get" class="form">
-          <a-input v-model:value="link" placeholder="Instagram Linkni qo'ying" />
+          <a-input v-model:value="link" placeholder="Qidiruv..." />
           <span class="btn-wrapper">
             <a-button @click="get" :loading="btnLoading" type="primary">Qidirish</a-button>
           </span>
