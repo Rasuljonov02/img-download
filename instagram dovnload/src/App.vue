@@ -25,7 +25,6 @@ const get = async () => {
   btnLoading.value = true
   try {
     const data = await getImages(link.value || 'people')
-    console.log(data)
     dataINS.value = data
   } catch (e) {
     console.error('Error fetching images:', e)
