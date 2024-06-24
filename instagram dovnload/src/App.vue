@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import getImages from '@/api'
-import { CloudDownloadOutlined } from '@ant-design/icons-vue'
 
 interface Photo {
   src: {
@@ -26,6 +25,7 @@ const get = async () => {
   btnLoading.value = true
   try {
     const data = await getImages(link.value || 'people')
+    console.log(data)
     dataINS.value = data
   } catch (e) {
     console.error('Error fetching images:', e)
