@@ -1,25 +1,5 @@
 import axios from 'axios'
-
-// const getINS = async (link: string) => {
-//   const options = {
-//     method: 'GET',
-//     url: link,
-//     headers: {
-//       'x-rapidapi-key': 'a4190b5426mshe46583b9c044cb6p136b48jsn839770809808',
-//       'x-rapidapi-host': 'youtube-media-downloader.p.rapidapi.com'
-//     }
-//   };
-//
-//   try {
-//     const response = await axios.request(options);
-//     console.log(response.data);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-
-
-const getImages = async (link:string) => {
+const getImages = async (link: string ) => {
   const config = {
     method: 'get',
 
